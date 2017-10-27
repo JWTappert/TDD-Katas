@@ -58,9 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Frame.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Bowling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="tests\test.cs" />
+    <Compile Include="tests\GameTests.cs" />
+    <Compile Include="tests\FrameTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
