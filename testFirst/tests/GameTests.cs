@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Remoting.Channels;
 using FluentAssertions;
 using NUnit.Framework;
@@ -18,6 +19,7 @@ namespace testFirst.tests
         [Test]
         public void TwoThrows()
         {
+            Console.WriteLine("Test 1");
             _game.Add(5);
             _game.Add(4);
             _game.Score.Should().Be(9);
@@ -27,6 +29,7 @@ namespace testFirst.tests
         [Test]
         public void TestFourThrows()
         {
+            Console.WriteLine("Test 2");
             _game.Add(5);
             _game.Add(4);
             _game.Add(7);
@@ -41,6 +44,7 @@ namespace testFirst.tests
         [Test]
         public void SimpleSpare()
         {
+            Console.WriteLine("Test 3");
             _game.Add(3);
             _game.Add(7);
             _game.Add(3);
@@ -51,6 +55,7 @@ namespace testFirst.tests
         [Test]
         public void SimpleFrameAfterSpare()
         {
+            Console.WriteLine("Test 4");
             _game.Add(3);
             _game.Add(7);
             _game.Add(3);
@@ -65,6 +70,7 @@ namespace testFirst.tests
         [Test]
         public void SimpleStrike()
         {
+            Console.WriteLine("Test 5");
             _game.Add(10);
             _game.Add(3);
             _game.Add(6);
@@ -77,6 +83,7 @@ namespace testFirst.tests
         [Test]
         public void TestPerfectGame()
         {
+            Console.WriteLine("Test 6");
             for (int i = 0; i < 11; i++)
             {
                 _game.Add(10);
@@ -88,6 +95,7 @@ namespace testFirst.tests
         [Test]
         public void TestEndOfArray()
         {
+            Console.WriteLine("Test 7");
             for (int i = 0; i < 9; i++)
             {
                 _game.Add(0);
@@ -102,6 +110,7 @@ namespace testFirst.tests
         [Test]
         public void SampleGame()
         {
+            Console.WriteLine("Test 8");
             _game.Add(1);
             _game.Add(4);
 
@@ -137,7 +146,8 @@ namespace testFirst.tests
         [Test]
         public void HeartBreaker()
         {
-            for (int i = 0; i < 11; i++)
+            Console.WriteLine("Test 9");
+            for (int i = 0; i < 10; i++)
             {
                 _game.Add(10);
             }
@@ -148,7 +158,8 @@ namespace testFirst.tests
         [Test]
         public void TenthFrameSpare()
         {
-            for (int i = 0; i < 9; i++)
+            Console.WriteLine("Test 10");
+            for (int i = 0; i < 10; i++)
             {
                 _game.Add(10);
             }

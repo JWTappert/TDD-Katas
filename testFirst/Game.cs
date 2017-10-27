@@ -6,17 +6,11 @@ namespace testFirst
 {
     public class Game
     {
-        public List<Frame> Frames { get; set; }
         public int[] Throws = new int[21];
         public int CurrentThrow;
         public int CurrentFrame = 1;
         public int Score { get; set; }
         public bool FirstThrow = true;
-
-        public Game()
-        {
-            Frames = new List<Frame>();
-        }
 
         public int GetScore()
         {
@@ -26,6 +20,7 @@ namespace testFirst
         public void Add(int pins)
         {
             Throws[CurrentThrow++] = pins;
+            Console.WriteLine($"Throws[{CurrentThrow}]: {Throws[CurrentThrow - 1]} Pins: {pins}");
             Score = ScoreForFrame(CurrentFrame);
             AdjustCurrentFrame(pins);
         }
@@ -36,14 +31,18 @@ namespace testFirst
             int score = 0;
             for (int currentFrame = 0; currentFrame < frame; currentFrame++)
             {
-                int firstThrow = Throws[ball++];
+                Console.WriteLine(ball);
+                int firstThrow = Throws[ball];
+
                 if (firstThrow == 10)
                 {
                     score += 10 + Throws[ball] + Throws[ball + 1];
+                    ball += 1;
                 }
                 else
                 {
-                    int secondThrow = Throws[ball++];
+                    ball = MoveToNextBall(ball);
+                    int secondThrow = Throws[ball];
                     int frameScore = firstThrow + secondThrow;
                     // spare needs next frames first throw
                     if (frameScore == 10)
@@ -55,6 +54,12 @@ namespace testFirst
                 }
             }
             return score;
+        }
+
+        private static int MoveToNextBall(int ball)
+        {
+            ball += 1;
+            return ball;
         }
 
         public void AdjustCurrentFrame(int pins)
