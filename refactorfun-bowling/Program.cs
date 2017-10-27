@@ -54,13 +54,22 @@ namespace refactorfun_bowling
                 if (score + player.Frames[frame].ThrowOne == 10)
                 {
                     player.Frames[frame].ThrowTwo = score;
-                    return "spare";
+                    return "/";
                 }
 
                 player.Frames[frame].ThrowTwo = score;
                 return $"{score + player.Frames[frame].ThrowOne}";
             }
-            return "strike";
+            return "X";
+        }
+
+        public void EvaluateScore(Player player, int frame, string lastThrow)
+        {
+            var previousFrame = player.Frames[frame - 1];
+            var currentFrame = player.Frames[frame];
+            var nextFrame = player.Frames[frame + 1];
+
+
         }
     }
 
@@ -121,6 +130,7 @@ namespace refactorfun_bowling
         public int ThrowOne { get; set; }
         public int ThrowTwo { get; set; }
         public bool HasThrown { get; set; }
+
 
         public Frame()
         {
