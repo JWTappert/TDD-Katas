@@ -6,6 +6,7 @@ namespace testFirst
     public class Game
     {
         public List<Frame> Frames { get; set; }
+        public int[] Throws = new int[21];
         public int Score { get; set; }
 
         public Game()
@@ -15,18 +16,51 @@ namespace testFirst
 
         public int GetScore()
         {
-            var completedFrames = Frames.Where(x => x.Completed);
+            return ScoreForFrame(GetCurrentFrame() - 1);
+        }
 
-            foreach (var completedFrame in completedFrames)
+        public void Add(int pins)
+        {
+            Score += pins;
+            AdjustCurrentFrame();
+        }
+
+        public int ScoreForFrame(int frame)
+        {
+            int ball = 0;
+            int score = 0;
+            for (int currentFrame = 0; currentFrame < frame; currentFrame++)
             {
-                if (completedFrame.Strike)
+                int firstThrow = Throws[ball++];
+                int secondThrow = Throws[ball++];
+                int frameScore = firstThrow + secondThrow;
+                // spare needs next frames first throw
+                if (frameScore == 10)
+                    score += frameScore + Throws[ball];
+                else
                 {
-                    
+                    score += frameScore;
                 }
-                Score += completedFrame.Score;
             }
+            return score;
+        }
 
-            return Frames.Where(x => x.Completed).Sum(y => y.Score);
+        public void AdjustCurrentFrame()
+        {
+            if (FirstThrow)
+            {
+                FirstThrow = false;
+            }
+            else
+            {
+                FirstThrow = true;
+                CurrentFrame++;
+            }
+        }
+
+        public int GetCurrentFrame()
+        {
+            return CurrentFrame;
         }
     }
 }

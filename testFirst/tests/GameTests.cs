@@ -15,36 +15,50 @@ namespace testFirst.tests
         }
 
         [Test]
-        public void AddsScoreCorrectlyBetweenTwoFrames()
+        public void TwoThrows()
         {
-            _game.Frames = new List<Frame>
-            {
-                new Frame {Completed = true, Score = 8},
-                new Frame {Completed = true, Score = 8}
-            };
-            _game.GetScore().Should().Be(16);
+            _game.Add(5);
+            _game.Add(4);
+            _game.Score.Should().Be(9);
+            _game.GetCurrentFrame().Should().Be(2);
         }
 
         [Test]
-        public void DoesNotIncludeIncompleteFramesInScore()
+        public void TestFourThrows()
         {
-            _game.Frames = new List<Frame>
-            {
-                new Frame {Completed = true, Score = 8},
-                new Frame {Completed = false, Score = 8}
-            };
-            _game.GetScore().Should().Be(8);
+            _game.Add(5);
+            _game.Add(4);
+            _game.Add(7);
+            _game.Add(2);
+
+            _game.Score.Should().Be(18);
+            _game.ScoreForFrame(1).Should().Be(9);
+            _game.ScoreForFrame(2).Should().Be(18);
+            _game.GetCurrentFrame().Should().Be(3);
         }
 
         [Test]
-        public void HandlesStrike()
+        public void SimpleSpare()
         {
-            _game.Frames = new List<Frame>
-            {
-                new Frame {Completed = true, Strike = true},
-                new Frame {Completed = true, Score = 8},
-            };
-            _game.GetScore().Should().Be(26);
+            _game.Add(3);
+            _game.Add(7);
+            _game.Add(3);
+            _game.ScoreForFrame(1).Should().Be(13);
+            _game.GetCurrentFrame().Should().Be(2);
+        }
+
+        [Test]
+        public void SimpleFrameAfterSpare()
+        {
+            _game.Add(3);
+            _game.Add(7);
+            _game.Add(3);
+            _game.Add(2);
+
+            _game.ScoreForFrame(1).Should().Be(13);
+            _game.ScoreForFrame(2).Should().Be(18);
+            _game.Score.Should().Be(18);
+            _game.GetCurrentFrame().Should().Be(3);
         }
     }
 }
