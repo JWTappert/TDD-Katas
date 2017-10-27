@@ -13,14 +13,33 @@ namespace refactorfun_bowling
             Console.WriteLine("Bowling!!!");
             Console.WriteLine("Enter your name:");
             var name = Console.ReadLine();
-
+            var scoreBoard = new ScoreBoard();
             var player1 = new Player(name);
 
             Console.WriteLine($"Welcome, {player1.Name}. Get ready to bowl!");
-
+            scoreBoard.PrintScoreBoard();
         }
 
         
+    }
+
+    class Rules
+    {
+        
+    }
+
+    class ScoreBoard
+    {
+        public void PrintScoreBoard()
+        {
+            Console.WriteLine("+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+            Console.WriteLine("|    1     |     2    |     3    |     4    |     5    |     6    |    7     |     8    |     9    |    10    |");
+            Console.WriteLine("+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+            Console.WriteLine("|    |     |    |     |    |     |    |     |    |     |    |     |    |     |    |     |    |     |   |   |  |");
+            Console.WriteLine("+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+            Console.WriteLine("|          |          |          |          |          |          |          |          |          |          |");
+            Console.WriteLine("+----------+----------+----------+----------+----------+----------+----------+----------+----------+----------+");
+        }
     }
 
     class Player

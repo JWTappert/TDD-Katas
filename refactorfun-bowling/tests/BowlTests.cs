@@ -11,7 +11,7 @@ namespace refactorfun_bowling.tests
         [SetUp]
         public void Setup()
         {
-            _player = new Player();
+            _player = new Player("Justin");
         }
 
         [Test]
