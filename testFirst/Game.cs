@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace testFirst
@@ -7,7 +8,10 @@ namespace testFirst
     {
         public List<Frame> Frames { get; set; }
         public int[] Throws = new int[21];
+        public int CurrentThrow;
+        public int CurrentFrame = 1;
         public int Score { get; set; }
+        public bool FirstThrow = true;
 
         public Game()
         {
@@ -21,8 +25,9 @@ namespace testFirst
 
         public void Add(int pins)
         {
-            Score += pins;
-            AdjustCurrentFrame();
+            Throws[CurrentThrow++] = pins;
+            Score = ScoreForFrame(CurrentFrame);
+            AdjustCurrentFrame(pins);
         }
 
         public int ScoreForFrame(int frame)
@@ -32,23 +37,36 @@ namespace testFirst
             for (int currentFrame = 0; currentFrame < frame; currentFrame++)
             {
                 int firstThrow = Throws[ball++];
-                int secondThrow = Throws[ball++];
-                int frameScore = firstThrow + secondThrow;
-                // spare needs next frames first throw
-                if (frameScore == 10)
-                    score += frameScore + Throws[ball];
+                if (firstThrow == 10)
+                {
+                    score += 10 + Throws[ball] + Throws[ball + 1];
+                }
                 else
                 {
-                    score += frameScore;
+                    int secondThrow = Throws[ball++];
+                    int frameScore = firstThrow + secondThrow;
+                    // spare needs next frames first throw
+                    if (frameScore == 10)
+                        score += frameScore + Throws[ball];
+                    else
+                    {
+                        score += frameScore;
+                    }
                 }
             }
             return score;
         }
 
-        public void AdjustCurrentFrame()
+        public void AdjustCurrentFrame(int pins)
         {
             if (FirstThrow)
             {
+                if (pins == 10) //STRIKE!
+                    CurrentFrame++;
+                else
+                {
+                    FirstThrow = false;
+                }
                 FirstThrow = false;
             }
             else
@@ -56,6 +74,7 @@ namespace testFirst
                 FirstThrow = true;
                 CurrentFrame++;
             }
+            CurrentFrame = Math.Min(11, CurrentFrame);
         }
 
         public int GetCurrentFrame()
