@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using FluentAssertions;
+using Moq;
 
 namespace Greeting_Kata.Tests
 {
@@ -17,7 +19,7 @@ namespace Greeting_Kata.Tests
         [Test]
         public void GreetMethodTest()
         {
-           var response =  _greeter.Greet("Billy");
+           var response =  Greeter.Greet("Billy");
 
             response.Should().Be("Hello, Billy.");
         }
@@ -25,17 +27,36 @@ namespace Greeting_Kata.Tests
         [Test]
         public void GrretHandlesNull()
         {
-            var response = _greeter.Greet("");
+            var response = Greeter.Greet("");
             response.Should().Be("Hello, my friend.");
+        }
+
+        [Test]
+        public void WhyAreYouYelling()
+        {
+            var response = Greeter.Greet("JOHNNY");
+            response.Should().Be("HELLO, JOHNNY!");
         }
         
     }
 
     public class Greeter
     {
-        public string Greet(string name)
+        public static string Greet(string name)
         {
-            return string.IsNullOrEmpty(name) ? $"Hello, my friend." : $"Hello, {name}.";
+            if (string.IsNullOrEmpty(name))
+                return "Hello, my friend.";
+            return CheckIfYelling(name) ? $"HELLO, {name}!" : $"Hello, {name}.";
+        }
+
+        private static bool CheckIfYelling(string name)
+        {
+            foreach (var i in name)
+            {
+                if (char.IsLetter(i) && !char.IsUpper(i))
+                    return false;
+            }
+            return true;
         }
     }
 }
