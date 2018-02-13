@@ -19,7 +19,14 @@ namespace Greeting_Kata.Tests
         {
            var response =  _greeter.Greet("Billy");
 
-            response.Should().Be("Hello, Billy");
+            response.Should().Be("Hello, Billy.");
+        }
+
+        [Test]
+        public void GrretHandlesNull()
+        {
+            var response = _greeter.Greet("");
+            response.Should().Be("Hello, my friend.");
         }
         
     }
@@ -28,7 +35,7 @@ namespace Greeting_Kata.Tests
     {
         public string Greet(string name)
         {
-            return $"Hello, {name}";
+            return string.IsNullOrEmpty(name) ? $"Hello, my friend." : $"Hello, {name}.";
         }
     }
 }
