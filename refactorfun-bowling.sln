@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "refactorfun-bowling", "refa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testFirst", "testFirst\testFirst.csproj", "{D0433F86-5105-446C-BDB6-91EDEF1C158B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Greeting-Kata", "Greeting-Kata", "{345D5BB5-4DAF-495B-96EC-EC4A82CD0A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greeting-Kata", "Greeting-Kata\Greeting-Kata.csproj", "{51D84F68-36EB-4771-95E2-E57CB1C40814}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,11 +25,18 @@ Global
 		{D0433F86-5105-446C-BDB6-91EDEF1C158B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0433F86-5105-446C-BDB6-91EDEF1C158B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0433F86-5105-446C-BDB6-91EDEF1C158B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D84F68-36EB-4771-95E2-E57CB1C40814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D84F68-36EB-4771-95E2-E57CB1C40814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D84F68-36EB-4771-95E2-E57CB1C40814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D84F68-36EB-4771-95E2-E57CB1C40814}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F75CBB99-5699-491C-917E-0306E1892863}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51D84F68-36EB-4771-95E2-E57CB1C40814} = {345D5BB5-4DAF-495B-96EC-EC4A82CD0A6B}
 	EndGlobalSection
 EndGlobal
