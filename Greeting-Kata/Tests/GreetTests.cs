@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using FluentAssertions;
 using Moq;
@@ -8,18 +9,15 @@ namespace Greeting_Kata.Tests
     [TestFixture()]
     public class GreetTests
     {
-        private Greeter _greeter;
-
         [SetUp]
         public void Setup()
         {
-            _greeter = new Greeter();
         }
 
         [Test]
         public void GreetMethodTest()
         {
-           var response =  Greeter.Greet("Billy");
+            var response = Greeter.Greet(new[] {"Billy"});
 
             response.Should().Be("Hello, Billy.");
         }
@@ -27,27 +25,53 @@ namespace Greeting_Kata.Tests
         [Test]
         public void GrretHandlesNull()
         {
-            var response = Greeter.Greet("");
+            var response = Greeter.Greet(new[] {""});
             response.Should().Be("Hello, my friend.");
         }
 
         [Test]
         public void WhyAreYouYelling()
         {
-            var response = Greeter.Greet("JOHNNY");
+            var response = Greeter.Greet(new[] {"JOHNNY"});
+
             response.Should().Be("HELLO, JOHNNY!");
         }
-        // https://github.com/testdouble/contributing-tests/wiki/Greeting-Kata#requirement-4
-        
+
+        [Test]
+        public void AcceptsTwoNames()
+        {
+            var names = new[] {"Billy", "Bobby"};
+            var response = Greeter.Greet(names);
+            response.Should().Be("Hello, Billy and Bobby.");
+        }
     }
 
     public class Greeter
     {
-        public static string Greet(string name)
+        public static string Greet(params string[] names)
         {
-            if (string.IsNullOrEmpty(name))
-                return "Hello, my friend.";
-            return CheckIfYelling(name) ? $"HELLO, {name}!" : $"Hello, {name}.";
+            if (names.Length < 2)
+            {
+                if (string.IsNullOrEmpty(names[0]))
+                    return "Hello, my friend.";
+                return CheckIfYelling(names[0]) ? $"HELLO, {names[0]}!" : $"Hello, {names[0]}.";
+            }
+            else if (names.Length >= 2)
+            {
+                var greeting = "Hello, ";
+
+                for (int i = 0; i < names.Length; i++)
+                {
+                    if (i == names.Length - 1)
+                        greeting = greeting + $"and {names[i]}";
+
+                    greeting = greeting + names[i] + " ";
+                }
+
+                greeting = greeting + ".";
+            }
+
+            return "failed";
         }
 
         private static bool CheckIfYelling(string name)
@@ -57,6 +81,7 @@ namespace Greeting_Kata.Tests
                 if (char.IsLetter(i) && !char.IsUpper(i))
                     return false;
             }
+
             return true;
         }
     }
