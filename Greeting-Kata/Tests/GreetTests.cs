@@ -26,7 +26,7 @@ namespace Greeting_Kata.Tests
         [Test]
         public void GrretHandlesNull()
         {
-            var response = Greeter.Greet(new List<string>{""});
+            var response = Greeter.Greet(new List<string> {""});
             response.Should().Be("Hello, my friend.");
         }
 
@@ -42,7 +42,7 @@ namespace Greeting_Kata.Tests
         public void AcceptsTwoNames()
         {
             var names = new List<string> {"Billy", "Bobby"};
-            
+
             var response = Greeter.Greet(names);
             response.Should().Be("Hello, Billy and Bobby.");
         }
@@ -52,28 +52,31 @@ namespace Greeting_Kata.Tests
     {
         public static string Greet(IList<string> names)
         {
-            if (names.Count <= 1)
-            {
-                if (string.IsNullOrEmpty(names[0]))
-                    return "Hello, my friend.";
-                return CheckIfYelling(names[0]) ? $"HELLO, {names[0]}!" : $"Hello, {names[0]}.";
-            }
-            else if (names.Count > 1)
-            {
-                var greeting = "Hello, ";
+            var greeting = "";
+            var start = "Hello, ";
 
-                for (int i = 0; i < names.Count; i++)
+            foreach (var name in names)
+            {
+                if (string.IsNullOrEmpty(name))
+                    return start + "my friend.";
+
+                start = CheckIfYelling(name) ? $"HELLO, " : $"Hello, ";
+
+                var index = names.IndexOf(name);
+
+                if (index == 0)
                 {
-                    if (i == names.Count - 1)
-                        greeting = greeting + $"and {names[i]}";
-
-                    greeting = greeting + names[i] + " ";
+                    greeting = start + $"{name}, ";
+                }
+                else if (index == names.Count - 1)
+                {
+                    greeting = greeting + $"and {name}.";
                 }
 
-                greeting = greeting + ".";
+                greeting = greeting + $"{name}, ";
             }
 
-            return "failed";
+            return greeting;
         }
 
         private static bool CheckIfYelling(string name)
