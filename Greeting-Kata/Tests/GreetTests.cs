@@ -13,7 +13,6 @@ namespace Greeting_Kata.Tests
         [SetUp]
         public void Setup()
         {
-            
         }
 
         [Test]
@@ -55,26 +54,30 @@ namespace Greeting_Kata.Tests
         {
             var greeting = "";
             var start = "Hello, ";
+            var isYell = false;
 
             foreach (var name in names)
             {
                 if (string.IsNullOrEmpty(name))
                     return start + "my friend.";
 
-                start = CheckIfYelling(name) ? $"HELLO, " : $"Hello, ";
+                isYell = CheckIfYelling(name);
+                start = isYell ? $"HELLO, " : $"Hello, ";
 
                 var index = names.IndexOf(name);
 
                 if (index == 0)
                 {
-                    greeting = start + $"{name}, ";
+                    greeting = start + (names.Count > 2 ? $"{name}, " : $"{name}") + (isYell && names.Count < 2 ? "!" : ".");
                 }
                 else if (index == names.Count - 1)
                 {
-                    greeting = greeting + $"and {name}.";
+                    greeting = greeting + $"and {name}!";
                 }
-
-                greeting = greeting + $"{name}, ";
+                else
+                {
+                    greeting = greeting + $"{name}, ";
+                }
             }
 
             return greeting;
