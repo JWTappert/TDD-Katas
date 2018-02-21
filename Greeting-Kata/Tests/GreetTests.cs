@@ -13,6 +13,7 @@ namespace Greeting_Kata.Tests
         [SetUp]
         public void Setup()
         {
+            
         }
 
         [Test]
