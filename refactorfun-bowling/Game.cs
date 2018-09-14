@@ -4,19 +4,19 @@
     {
         private int _score;
         private int _currentThrow;
-        private int _curentFrame;
+        private int _currentFrame;
         private readonly int[] _throws = new int[21];
         private bool _isFirstThrow;
 
         public Game()
         {
             _isFirstThrow = true;
-            _curentFrame = 1;
+            _currentFrame = 1;
         }
 
         public double Score()
         {
-            return _score;
+            return ScoreForFrame(_currentFrame - 1);
         }
 
         public void Add(int pins)
@@ -24,19 +24,31 @@
             _throws[_currentThrow++] = pins;
             _score += pins;
 
-            AdjustCurrentFrame();
+            AdjustCurrentFrame(pins);
         }
 
-        private void AdjustCurrentFrame()
+        private void AdjustCurrentFrame(int pins)
         {
             if (_isFirstThrow)
             {
-                _isFirstThrow = false;
+                if (pins == 10)
+                {
+                    _currentFrame++;
+                }
+                else
+                {
+                    _isFirstThrow = false;
+                }
             }
             else
             {
                 _isFirstThrow = true;
-                _curentFrame++;
+                _currentFrame++;
+            }
+
+            if (_currentFrame > 11)
+            {
+                _currentFrame = 11;
             }
         }
 
@@ -47,15 +59,22 @@
             for (var currentFrame = 0; currentFrame < theFrame; currentFrame++)
             {
                 var firstThrow = _throws[ball++];
-                var secondThrow = _throws[ball++];
-                var frameScore = firstThrow + secondThrow;
-                if (frameScore == 10)
+                if (firstThrow == 10)
                 {
-                    score += frameScore + _throws[ball];
+                    score += 10 + _throws[ball] + _throws[ball + 1];
                 }
                 else
                 {
-                    score += frameScore;
+                    var secondThrow = _throws[ball++];
+                    var frameScore = firstThrow + secondThrow;
+                    if (frameScore == 10)
+                    {
+                        score += frameScore + _throws[ball];
+                    }
+                    else
+                    {
+                        score += frameScore;
+                    }
                 }
             }
 
@@ -64,7 +83,7 @@
 
         public int CurrentFrame()
         {
-            return _curentFrame;
+            return _currentFrame;
         }
     }
 }
