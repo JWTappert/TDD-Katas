@@ -7,6 +7,9 @@
         private int _currentFrame;
         private readonly int[] _throws = new int[21];
         private bool _isFirstThrow;
+        private int _ball;
+        private int _firstThrow;
+        private int _secondThrow;
 
         public Game()
         {
@@ -54,28 +57,36 @@
 
         public int ScoreForFrame(int theFrame)
         {
-            var ball = 0;
+            _ball = 0;
             var score = 0;
             for (var currentFrame = 0; currentFrame < theFrame; currentFrame++)
             {
-                var firstThrow = _throws[ball++];
-                if (firstThrow == 10)
+                _firstThrow = _throws[_ball++];
+                if (_firstThrow == 10)
                 {
-                    score += 10 + _throws[ball] + _throws[ball + 1];
+                    score += 10 + _throws[_ball] + _throws[_ball + 1];
                 }
                 else
                 {
-                    var secondThrow = _throws[ball++];
-                    var frameScore = firstThrow + secondThrow;
-                    if (frameScore == 10)
-                    {
-                        score += frameScore + _throws[ball];
-                    }
-                    else
-                    {
-                        score += frameScore;
-                    }
+                    score += HandleSecodThrow();
                 }
+            }
+
+            return score;
+        }
+
+        private int HandleSecodThrow()
+        {
+            var score = 0;
+            _secondThrow = _throws[_ball++];
+            var frameScore = _firstThrow + _secondThrow;
+            if (frameScore == 10)
+            {
+                score += frameScore + _throws[_ball];
+            }
+            else
+            {
+                score += frameScore;
             }
 
             return score;
