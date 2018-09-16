@@ -1,4 +1,6 @@
-﻿namespace refactorfun_bowling
+﻿using System.Runtime.InteropServices;
+
+namespace refactorfun_bowling
 {
     public class Game
     {
@@ -8,8 +10,6 @@
         private readonly int[] _throws = new int[21];
         private bool _isFirstThrow;
         private int _ball;
-        private int _firstThrow;
-        private int _secondThrow;
 
         public Game()
         {
@@ -61,35 +61,41 @@
             var score = 0;
             for (var currentFrame = 0; currentFrame < theFrame; currentFrame++)
             {
-                _firstThrow = _throws[_ball++];
-                if (_firstThrow == 10)
+                if (Strike())
                 {
-                    score += 10 + _throws[_ball] + _throws[_ball + 1];
+                    score += 10 + NextTwoBallsForStrike;
+                    _ball++;
+                }
+                else if (Spare())
+                {
+                    score += 10 + NextBallForSpare;
+                    _ball += 2;
                 }
                 else
                 {
-                    score += HandleSecodThrow();
+                    score += TwoBallsInFrame;
+                    _ball += 2;
                 }
             }
 
             return score;
         }
 
-        private int HandleSecodThrow()
-        {
-            var score = 0;
-            _secondThrow = _throws[_ball++];
-            var frameScore = _firstThrow + _secondThrow;
-            if (frameScore == 10)
-            {
-                score += frameScore + _throws[_ball];
-            }
-            else
-            {
-                score += frameScore;
-            }
+        private int NextTwoBallsForStrike => _throws[_ball + 1] + _throws[_ball + 2];
 
-            return score;
+        private int NextBallForSpare => _throws[_ball + 2];
+        
+        private int TwoBallsInFrame => _throws[_ball] + _throws[_ball + 1];
+
+
+        private bool Strike()
+        {
+            return _throws[_ball] == 10;
+        }
+
+        private bool Spare()
+        {
+            return _throws[_ball] + _throws[_ball + 1] == 10;
         }
 
         public int CurrentFrame()
