@@ -4,12 +4,9 @@ namespace refactorfun_bowling
 {
     public class Game
     {
-        private int _score;
-        private int _currentThrow;
         private int _currentFrame;
-        private readonly int[] _throws = new int[21];
         private bool _isFirstThrow;
-        private int _ball;
+        private readonly Scorer _scorer = new Scorer();
 
         public Game()
         {
@@ -17,90 +14,45 @@ namespace refactorfun_bowling
             _currentFrame = 1;
         }
 
-        public double Score()
+        public int Score()
         {
-            return ScoreForFrame(_currentFrame - 1);
+            return ScoreForFrame(_currentFrame);
         }
 
         public void Add(int pins)
         {
-            _throws[_currentThrow++] = pins;
-            _score += pins;
-
+            _scorer.AddThrow(pins);
             AdjustCurrentFrame(pins);
-        }
-
-        private void AdjustCurrentFrame(int pins)
-        {
-            if (_isFirstThrow)
-            {
-                if (pins == 10)
-                {
-                    _currentFrame++;
-                }
-                else
-                {
-                    _isFirstThrow = false;
-                }
-            }
-            else
-            {
-                _isFirstThrow = true;
-                _currentFrame++;
-            }
-
-            if (_currentFrame > 11)
-            {
-                _currentFrame = 11;
-            }
         }
 
         public int ScoreForFrame(int theFrame)
         {
-            _ball = 0;
-            var score = 0;
-            for (var currentFrame = 0; currentFrame < theFrame; currentFrame++)
-            {
-                if (Strike())
-                {
-                    score += 10 + NextTwoBallsForStrike;
-                    _ball++;
-                }
-                else if (Spare())
-                {
-                    score += 10 + NextBallForSpare;
-                    _ball += 2;
-                }
-                else
-                {
-                    score += TwoBallsInFrame;
-                    _ball += 2;
-                }
-            }
-
-            return score;
+            return _scorer.ScoreForFrame(theFrame);
         }
 
-        private int NextTwoBallsForStrike => _throws[_ball + 1] + _throws[_ball + 2];
-
-        private int NextBallForSpare => _throws[_ball + 2];
-        
-        private int TwoBallsInFrame => _throws[_ball] + _throws[_ball + 1];
-
-
-        private bool Strike()
+        private void AdjustCurrentFrame(int pins)
         {
-            return _throws[_ball] == 10;
+            if (LastBllInFrme(pins))
+                AdvanceFrame();
+            else
+                _isFirstThrow = false;
         }
 
-        private bool Spare()
+        private bool LastBllInFrme(int pins)
         {
-            return _throws[_ball] + _throws[_ball + 1] == 10;
+            return Strike(pins) || (!_isFirstThrow);
         }
 
-        public int CurrentFrame()
+        private bool Strike(int pins)
         {
-            return _currentFrame;
+            return (_isFirstThrow && pins == 10);
+        }
+
+        private void AdvanceFrame()
+        {
+            _currentFrame++;
+            if (_currentFrame > 10)
+                _currentFrame = 10;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace refactorfun_bowling
             _game.Add(5);
             _game.Add(4);
             Assert.AreEqual(9, _game.Score());
-            Assert.AreEqual(2, _game.CurrentFrame());
         }
 
         [Test]
@@ -33,7 +32,6 @@ namespace refactorfun_bowling
             Assert.AreEqual(18, _game.Score());
             Assert.AreEqual(9, _game.ScoreForFrame(1));
             Assert.AreEqual(18, _game.ScoreForFrame(2));
-            Assert.AreEqual(3, _game.CurrentFrame());
         }
 
         [Test]
@@ -43,7 +41,6 @@ namespace refactorfun_bowling
             _game.Add(7);
             _game.Add(3);
             Assert.AreEqual(13, _game.ScoreForFrame(1));
-            Assert.AreEqual(2, _game.CurrentFrame());
         }
 
         [Test]
@@ -56,7 +53,6 @@ namespace refactorfun_bowling
             Assert.AreEqual(13, _game.ScoreForFrame(1));
             Assert.AreEqual(18, _game.ScoreForFrame(2));
             Assert.AreEqual(18, _game.Score());
-            Assert.AreEqual(3, _game.CurrentFrame());
         }
 
         [Test]
@@ -67,7 +63,6 @@ namespace refactorfun_bowling
             _game.Add(3);
             Assert.AreEqual(19, _game.ScoreForFrame(1));
             Assert.AreEqual(28, _game.Score());
-            Assert.AreEqual(3, _game.CurrentFrame());
         }
 
         [Test]
@@ -78,7 +73,6 @@ namespace refactorfun_bowling
                _game.Add(10); 
             }
             Assert.AreEqual(300, _game.Score());
-            Assert.AreEqual(11, _game.CurrentFrame());
         }
 
         [Test]
